@@ -46,8 +46,22 @@ if (analyzeId && !isDev) {
 }
 
 const timestamp = Date.now();
-console.log(execSync("git rev-parse --abbrev-ref HEAD").toString().trim());
-console.log(process.env);
+
+let githubBranch = "main";
+for (const b of [
+  // vercel
+  process.env.VERCEL_GIT_COMMIT_REF,
+  // cloudflare page
+  process.env.CF_PAGES_BRANCH,
+  // XXX Why `git rev-parse --abbrev-ref HEAD` not works as expected?
+  // git cli for fallback
+  execSync("git rev-parse --abbrev-ref HEAD").toString().trim()
+]) {
+  if (b) {
+    githubBranch = b;
+    break;
+  }
+}
 
 // const prefix = "monaco-editor/esm/vs";
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
@@ -82,7 +96,7 @@ export default defineNuxtConfig({
     },
     app: {
       NUXT_ENV_CURRENT_GIT_SHA: execSync("git rev-parse HEAD").toString().trim(),
-      githubBranch: execSync("git rev-parse --abbrev-ref HEAD").toString().trim(),
+      githubBranch,
       mongoDBEnabled: !!process.env.MONGODB_URI,
       cmtRepId: config.CommentRepoId || process.env.CommentRepoId,
       cmtRepCateId: config.CommentDiscussionCategoryId || process.env.CommentDiscussionCategoryId
