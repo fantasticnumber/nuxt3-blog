@@ -80,7 +80,7 @@ export default defineNuxtConfig({
     },
     app: {
       NUXT_ENV_CURRENT_GIT_SHA: execSync("git rev-parse HEAD").toString().trim(),
-      githubBranch: execSync("git branch --show-current").toString().trim(),
+      githubBranch: execSync("git rev-parse --abbrev-ref HEAD").toString().trim(),
       mongoDBEnabled: !!process.env.MONGODB_URI,
       cmtRepId: config.CommentRepoId || process.env.CommentRepoId,
       cmtRepCateId: config.CommentDiscussionCategoryId || process.env.CommentDiscussionCategoryId
