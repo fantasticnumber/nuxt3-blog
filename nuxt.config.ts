@@ -46,6 +46,7 @@ if (analyzeId && !isDev) {
 }
 
 const timestamp = Date.now();
+console.log(execSync("git rev-parse --abbrev-ref HEAD").toString().trim());
 
 // const prefix = "monaco-editor/esm/vs";
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
