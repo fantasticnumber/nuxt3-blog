@@ -23,7 +23,7 @@ jobs:
       # Use "/" for a user/organization site or a site served from the domain root.
       # Change this to "/<repo-name>/" when deploying a project site under a subpath,
       # e.g. https://<user>.github.io/<repo-name>/
-      NUXT_APP_BASE_URL: /
+      NUXT_APP_BASE_URL: /nuxt3-blog/
     steps:
       - name: Check target branch
         run: |
